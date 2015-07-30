@@ -7,7 +7,7 @@ Before you can start you need to register your [Geoname](http://www.geonames.org
 * Register your [Geoname](http://www.geonames.org/) and [activate it](http://www.geonames.org/manageaccount)
 * Set Environment Variable GEONAME 
   `export GEONAME=your_geoname`
-* Install neccesery gem's
+* Install necessary gem's
   `bundle install`
 * Run server
   `ruby server.rb`
