@@ -1,7 +1,7 @@
 require 'socket'
 require_relative 'responser'
 
-Thread.abort_on_exception = true
+Thread.abort_on_exception = false
 
 server = TCPServer.open('127.0.0.1', 2000)
 loop do

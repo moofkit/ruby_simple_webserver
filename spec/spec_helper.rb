@@ -1,2 +1,2 @@
-require 'timezone'
+require 'tzinfo'
 require_relative '../responser'

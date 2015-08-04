@@ -1,6 +1,4 @@
-require 'timezone'
-require 'geokit'
-require 'cgi'
+require_relative 'cities_time'
 
 class Responser
   PATH = '/time'
@@ -9,10 +7,6 @@ class Responser
     200 => '200 OK',
     404 => '404 Not Found'
   }
-
-  Timezone::Configure.begin do |c|
-    c.username = ENV['GEONAME']
-  end
 
   def initialize(request)
     @request = request
@@ -27,18 +21,6 @@ class Responser
     [path, params]
   end
 
-  def cities_time(cities)
-    response = ""
-    return response unless cities
-    cities.each do |city|
-      res = Geokit::Geocoders::GoogleGeocoder.geocode(city)
-      timezone = Timezone::Zone.new(latlon: res.to_a)
-      time = timezone.time(@time_now).strftime("%Y-%m-%d %H:%M:%S")
-      response << "#{city}: #{time}\r\n"
-    end
-    response
-  end
-
   def response
     request_path, cities = parse_request
     message = "Path not found\n"
@@ -46,7 +28,8 @@ class Responser
 
     if request_path == PATH
       message = "UTC: " + @time_now.strftime("%Y-%m-%d %H:%M:%S") + "\r\n"
-      message << cities_time(cities)
+      cities_time = CitiesTime.new(cities, @time_now)
+      message << cities_time.request_cities_time
       status = 200
     end
 

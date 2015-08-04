@@ -11,8 +11,8 @@ describe Responser do
     end
 
     it "response with valid UTC time" do
-      time = "UTC: " + Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")
-      expect(responser.response.scan(time).size).to eq 1
+      time = "UTC: " + Time.now.utc.strftime("%Y-%m-%d %H:%M")
+      expect(responser.response).to include(time)
     end
   end
 
@@ -26,14 +26,14 @@ describe Responser do
     end
 
     it "response with valid UTC time" do
-      time = "UTC: " + Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")
-      expect(responser.response.scan(time).size).to eq 1
+      time = "UTC: " + Time.now.utc.strftime("%Y-%m-%d %H:%M")
+      expect(responser.response).to include(time)
     end
 
     it "response with valid Moscow time" do
-      tz = Timezone::Zone.new zone: 'Europe/Moscow'
-      time = "Moscow: " + tz.utc_to_local(Time.now.utc).strftime("%Y-%m-%d %H:%M:%S")
-      expect(responser.response.scan(time).size).to eq 1
+      tz = TZInfo::Timezone.get('Europe/Moscow')
+      time = "Moscow: " + tz.utc_to_local(Time.now.utc).strftime("%Y-%m-%d %H:%M")
+      expect(responser.response).to include(time)
     end
   end
 
@@ -47,22 +47,21 @@ describe Responser do
     end
 
     it "response with valid UTC time" do
-      time = "UTC: " + Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")
-      expect(responser.response.scan(time).size).to eq 1
+      time = "UTC: " + Time.now.utc.strftime("%Y-%m-%d %H:%M")
+      expect(responser.response).to include(time)
     end
 
     it "response with valid Moscow time" do
-      tz = Timezone::Zone.new zone: 'Europe/Moscow'
-      time = "Moscow: " + tz.utc_to_local(Time.now.utc).strftime("%Y-%m-%d %H:%M:%S")
-      expect(responser.response.scan(time).size).to eq 1
+      tz = TZInfo::Timezone.get('Europe/Moscow')
+      time = "Moscow: " + tz.utc_to_local(Time.now.utc).strftime("%Y-%m-%d %H:%M")
+      expect(responser.response).to include(time)
     end
 
     it "response with valid New York time" do
-      tz = Timezone::Zone.new zone: 'America/New_York'
-      time = "New York: " + tz.utc_to_local(Time.now.utc).strftime("%Y-%m-%d %H:%M:%S")
-      expect(responser.response.scan(time).size).to eq 1
+      tz = TZInfo::Timezone.get('America/New_York')
+      time = "New York: " + tz.utc_to_local(Time.now.utc).strftime("%Y-%m-%d %H:%M")
+      expect(responser.response).to include(time)
     end
-    
   end
 
   context "requset invalid path" do
